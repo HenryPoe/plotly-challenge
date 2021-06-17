@@ -50,6 +50,40 @@ function writeDemo(data, index) {
         
 }
 
+function createGauge(data, index) {
+    var gaugeTrace = [
+        {
+            domain: { x: [0, 1], y: [0, 1] },
+            value: data.metadata[index].wfreq,
+            title: { text: "Weekly Belly Button Washes" },
+            type: "indicator",
+            mode: "gauge+number",
+            gauge: {
+                bar: { color: "black" },
+                axis: { range: [null, 9], dtick: 1},
+                steps: [
+                    { range: [0, 1], color: "#FCE4EC" },
+                    { range: [1, 2], color: "#F8BBD0" },
+                    { range: [2, 3], color: "#F48FB1" },
+                    { range: [3, 4], color: "#F06292" },
+                    { range: [4, 5], color: "#EC407A" },
+                    { range: [5, 6], color: "#E91E63" },
+                    { range: [6, 7], color: "#D81B60" },
+                    { range: [7, 8], color: "#C2185B" },
+                    { range: [8, 9], color: "#AD1457" }
+                ]
+            }
+        }
+    ];
+    
+    var layout = { 
+        width: 600, 
+        height: 500, 
+        margin: { t: 0, b: 0 },
+    };
+    Plotly.newPlot('gauge', gaugeTrace, layout);
+}
+
 function update() {
     // Prevent the page from refreshing
     d3.event.preventDefault();
@@ -58,6 +92,7 @@ function update() {
     createBar(data, index);
     createBubble(data, index);
     writeDemo(data, index);
+    createGauge(data, index);
 }
 
 // Calls the update when dropdown is changed
@@ -78,5 +113,6 @@ d3.json("samples.json").then((json) => {
 
     createBar(data, 0);
     createBubble(data, 0);
-    writeDemo(data, 0)
+    writeDemo(data, 0);
+    createGauge(data, 0);
 })
